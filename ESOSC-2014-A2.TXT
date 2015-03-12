@@ -1,0 +1,50 @@
+  ESOTERIC STANDARD COMMITTEE
+     Normalized Brainfuck
+     ESOSC-2014-A2
+
+This standard has been approved by the following members of the ESOSC:
+ * nortti
+ * Taneb
+ * mroman
+
+
+1 Brainfuck
+-----------
+
+Brainfuck is a well known esoteric programming language created by Urban
+Müller which operates on a tape (an array of memory cells). A pointer 
+dictates which cell on the tape a command reads or writes [1].
+Different brainfuck implementations handle characters that are not commands
+differently. The ESOSC defines a normal form for brainfuck programs which all
+standard conform implementations shall accept.
+
+
+2 Normalized Brainfuck
+----------------------
+
+Normalized Brainfuck (NBF) defines a strict grammar to ease development of
+brainfuck implementations. NBF programs contain no whitespaces or comments
+and thus may only contain valid commands.
+
+2.1 Normal Form
+===============
+
+Shown below in figure [FNF] is the grammar of the normal form (NF). 
+If a brainfuck program conforms to this grammar it is NBF conform.
+
+    [FNF]
+
+    <S> ::= <A><S> | λ
+    <A> ::= ‘+’|‘-’|‘>’|‘<’|‘.’|‘,’|‘[’<S>‘]’
+
+    [/FNF]
+
+A brainfuck implementation must be able to accept brainfuck programs in normal
+form. Optionally it may issue a warning if it is confronted with an
+unnormalized brainfuck program or even reject such unnormalized brainfuck
+programs.
+
+
+[1] http://de4.aminet.net/dev/lang/brainfuck-2.readme
+
+

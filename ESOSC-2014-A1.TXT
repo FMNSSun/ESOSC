@@ -1,0 +1,91 @@
+  ESOTERIC STANDARD COMMITTEE
+     The Esoteric Standard Committee
+     ESOSC-2014-A1 
+
+This standard has been approved by the following members of the ESOSC: 
+
+ * nortti 
+ * Taneb 
+ * mroman  
+
+
+1 About ESOSC
+-------------
+
+The Esoteric Standard Committee (usually referred to as ESOSC) issues esolang
+related standards to strive for a standardization of esoteric programming
+languages and esolang related works.  
+
+
+2 EUIN
+------
+
+The ESOSC Unique Identification number uniquely identifies (usually referred to
+as EUIN) a standard with respect to specific versions of certain standards.  
+
+
+2.1 Format 
+==========
+
+The format of an EUIN is as follows:  
+
+<EUIN> ::= 
+  `ESOSC' <hyph> <year> <hyph> <prefix> <number> [ <hyph>`R' <number> ]
+<hyph> ::= `-' 
+<number> ::= <digit> | <digit> <number> 
+<digit> ::= `0'|`1'|`2'|`3'|`4'|`5'|`6'|`7'|`8'|`9' 
+<year> ::= <digit> <digit> <digit> <digit> 
+<prefix> ::= `D' | `A' | `O' 
+
+ 
+prefix denotes the state the standard is in. D refers to a draft, A to an
+approved standard and O marks obsolete standards. The optional -R... part
+denotes a revision number of a standard. Further the EUIN encodes the year
+of first issue and a number that is successively increased with every new
+standard to ensure uniqueness. The EUIN doesn’t change except for the prefix
+and revision number once a standard changes state. Revision numbers are
+successively increased with new revisions of a standard. Revision numbers
+shall be avoided for approved standards.  
+
+
+3 Approval of standards 
+-----------------------
+
+For a standard to be approved at least three members of the ESOSC have to
+approve it without having been bribed, forced, blackmailed or influenced by
+drugs, alcohol or similar substances to do so. 
+
+
+4 Obsoletion
+------------
+
+Standards may be marked as obsolete once the ESOSC finds that it is no longer
+appropriate to use or has been completely replaced by another standard and can
+not recommend using the old standard any longer. Marking a standard as
+obsolete requires approval of at least three members of the ESOSC. 
+
+
+5 Drafts
+--------
+
+Any member of the ESOSC is allowed to submit drafts for approval.
+Any non-member of the ESOSC is allowed to request that the ESOSC should work
+on a new standard and may submit suggestions or proposals for standards to
+the ESOSC.  
+
+
+6 Revisions 
+-----------
+
+A new revision of an approved standard is put into the draft state and
+requires the usual approval process taking place. Revisions of standards in
+draft state are not affected by this. The ESOSC is allowed to correct grammar,
+orthographical or similar mistakes without requiring a new revision.  
+
+
+7 New members
+-------------
+
+For a non-member to become a member he or she has to pass a vote. To pass the
+vote 2/3 of all existing members must vote to accept her or him as a new
+member. 

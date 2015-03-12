@@ -1,0 +1,70 @@
+  ESOTERIC STANDARD COMMITTEE
+     Lambda Calculus Syntax
+     ESOSC-2014-A5
+
+     2015-03-11
+
+This standard has been approved by the following members of the ESOSC:
+ * nortti
+ * Taneb
+ * mroman
+
+
+1 Lambda Calculus
+-----------------
+
+Lambda Calculus is a formal system used in mathematical logic and plays
+and played an important role in the development of programming
+langugage theory [1].
+
+[1] http://en.wikipedia.org/wiki/Lambda_calculus
+
+2 Lambda Calculus Syntax
+------------------------
+
+This standard aims to standardize the syntax/notation of lambda calculus.
+Figure [GRMR] specifies the grammar of lambda calculus given in EBNF. 
+The EBNF rule /term/ is the top-level rule and shall be the entry point
+for parsing lambda calculus terms. 
+
+
+     [GRMR]
+
+     space = ? spaces (whitespaces, newlines, tabs) ?;
+
+     vLetter = ? printable letters except 
+                       "\", "λ", "(", ")" and ".".
+               ?;
+
+     variable = vLetter, { vLetter };
+
+     term = { space }, 
+        ( variable
+        | application
+        | parens
+        | lambda
+        ), { space };
+
+     lambda = 
+          L, { space }, variable , ".", term;
+        | L, { space }, (variable, { space }), { variable, { space } },
+          [ variable ], ".", term;
+
+     parens = "(", term, ")";
+
+     L = "λ" | "\";
+
+     application = term, term;
+
+     [/GRMR]
+
+If UTF-8 support is readily available then it is recommended to use λ instead of \.
+
+2.1 Abbreviation
+---------------
+
+The syntax defined by the ESOSC allows the use of "abbreviated forms" such as
+     λx y z.f
+instead of
+     λx.λy.λz.f
+but which are semantically identic. 
