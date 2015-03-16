@@ -80,26 +80,26 @@ Given in parantheses are properties of the built-in.
 (Please keep in alphabetical order (based on the name of the built-in)):
 
 
- + ADD								(ZIPWITH, MAP)
-  Int x, Int y -> Int				Performs integer addition.
+ + ADD                              (ZIPWITH, MAP)
+  Int x, Int y -> Int               Performs integer addition.
   Double x, Int y -> Double
   Int x, Double y -> Double
-  Double x, Double y -> Double		Convert both arguments to double then perform
-									addition.
+  Double x, Double y -> Double      Convert both arguments to double then perform
+                                    addition.
 
-* MUL								(ZIPWITH, MAP)
-  Int x, Int y -> Int				Performs integer multiplication.
+* MUL                               (ZIPWITH, MAP)
+  Int x, Int y -> Int               Performs integer multiplication.
   Double x, Double y -> Double
   Int x, Double y -> Double
-  Double x, Double y -> Double		Convert both arguments to double then perform
-									multiplication.
+  Double x, Double y -> Double      Convert both arguments to double then perform
+                                    multiplication.
 
- _ SUB								(ZIPWITH, MAP)
-  Int x, Int y -> Int				Performs integer subtraction.
+ _ SUB                              (ZIPWITH, MAP)
+  Int x, Int y -> Int               Performs integer subtraction.
   Double x, Int y -> Double
   Int x, Double y -> Double
-  Double x, Double y -> Double		Convert both arguments to double then perform
-									subtraction.
+  Double x, Double y -> Double      Convert both arguments to double then perform
+                                    subtraction.
   
 5.2 List of standard commands
 =============================
@@ -108,5 +108,5 @@ These are not *really* built-ins but are "standard commands" available to all pr
 commands can be implemented in Oughrril (although implementers are free to hard-code these
 directly into their interpreters as long as they can mimic every side-effect). 
 
-	Name		Command		Defined as				Description
-	NEGATE		Ng			-1*						Negates a number.
+    Name        Command     Defined as              Description
+    NEGATE      Ng          -1*                     Negates a number.
