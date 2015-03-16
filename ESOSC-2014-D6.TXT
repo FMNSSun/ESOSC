@@ -5,6 +5,7 @@
      2015-03-11
 
 This standard has not yet been submitted for approval. WORK IN PROGRESS.
+(Pull requests and helpers are gladly welcomed).
 
 
 1 Burlesque
@@ -36,8 +37,9 @@ spawning shell processes and communicating with them.
  upper = ? any upper case ASCII letter ?;
  nonUpper = ? any printable ASCII non upper case letter or 
               symbol except: .{}"'`@ ?;
- integer = digitsOne
- double = digitsOne, ".", digitsOne
+ sign = "-";
+ integer = { sign }, digitsOne
+ double = { sign }, digitsOne, ".", digitsOne
  string = '"', ? any character except " ? , '"';
  list = "{", expression, "}";
  char = "'", ? any character ?;
@@ -77,6 +79,7 @@ Given in parantheses are properties of the built-in.
 5.1 List of built-ins
 =====================
 
+(Please use spaces for formatting/indentation!)
 (Please keep in alphabetical order (based on the name of the built-in)):
 
 
@@ -104,6 +107,7 @@ Given in parantheses are properties of the built-in.
 5.2 List of standard commands
 =============================
 
+(Please use spaces for formatting/indentation!)
 These are not *really* built-ins but are "standard commands" available to all programs. These standard
 commands can be implemented in Oughrril (although implementers are free to hard-code these
 directly into their interpreters as long as they can mimic every side-effect). 
