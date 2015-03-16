@@ -1,0 +1,112 @@
+  ESOTERIC STANDARD COMMITTEE
+     Oughrril (Burlesque 2.0)
+     ESOSC-2014-D6
+
+     2015-03-11
+
+This standard has not yet been submitted for approval. WORK IN PROGRESS.
+
+
+1 Burlesque
+-----------
+
+Burlesque is a esoteric programming language with a very rich set of
+built-ins. However, Burlesque has grown over the years and has thus become
+very chaotic and almost impossible for others to implement and there's
+no specification but rather an incomplete documentation available. Burlesque
+has made its way into golfing but it's clear that certain design mistakes
+and the fact that every built-in is two characters long make the language
+less suited for golfing that it could have been. 
+
+
+2 Oughrril
+----------
+
+Oughrril shall be the successor of Burlesque without the need for any
+compatibility. Oughrril should cover a lot of Burlesque's functionality
+and shall be extensible and support at least some basic I/O through
+spawning shell processes and communicating with them. 
+
+3 Syntax
+--------
+
+ digit = ? digits 0-9 ?;
+ digitsOne = digit, { digit };
+ space = ? any whitespace such as tab, newline, space ?;
+ upper = ? any upper case ASCII letter ?;
+ nonUpper = ? any printable ASCII non upper case letter or 
+              symbol except: .{}"'`@ ?;
+ integer = digitsOne
+ double = digitsOne, ".", digitsOne
+ string = '"', ? any character except " ? , '"';
+ list = "{", expression, "}";
+ char = "'", ? any character ?;
+ quoted = "`", identifier;
+ identifier = nonUpper | upper, identifier;
+ value = { space }, (double | string | char | list | integer | quoted), { space }
+ expression = value, { value };
+ definition = "@", identifier, expression;
+
+The syntax allows for variable-length built-ins. An identifier ends with a
+non-uppercase letter or symbol (e.g. FO+ is a three letter builtin).
+
+
+4 Types
+-------
+
+ * Int: Integer. At least the range of a 64bit signed integer. 
+ * Double: Double precision floating point.
+ * List: A list of values.
+ * Identifier: An identifier.
+ * Quoted: A quoted value (mostly indentifiers).
+ * String: "Text". A sequence of characters.
+ * Char: A character (unicode codepoint).
+
+5 Built-ins
+----------
+
+Arguments in order left to right. Given after /->/ is the return type.
+Given in parantheses are properties of the built-in.
+
+ ZIPWITH: If given two list the built-in is applied pair-wise to elements
+          of the lists. E.g. [1 2 3][4 5 6]+ results in [5 7 9].
+ MAP: If given a list (either as first or second argument) the built-in
+      will "map" over the list. E.g. [1 2 3]5+ results in [6 7 8] or
+      3[1 2 3]- results in [2 1 0].
+
+5.1 List of built-ins
+=====================
+
+(Please keep in alphabetical order (based on the name of the built-in)):
+
+
+ + ADD								(ZIPWITH, MAP)
+  Int x, Int y -> Int				Performs integer addition.
+  Double x, Int y -> Double
+  Int x, Double y -> Double
+  Double x, Double y -> Double		Convert both arguments to double then perform
+									addition.
+
+* MUL								(ZIPWITH, MAP)
+  Int x, Int y -> Int				Performs integer multiplication.
+  Double x, Double y -> Double
+  Int x, Double y -> Double
+  Double x, Double y -> Double		Convert both arguments to double then perform
+									multiplication.
+
+ _ SUB								(ZIPWITH, MAP)
+  Int x, Int y -> Int				Performs integer subtraction.
+  Double x, Int y -> Double
+  Int x, Double y -> Double
+  Double x, Double y -> Double		Convert both arguments to double then perform
+									subtraction.
+  
+5.2 List of standard commands
+=============================
+
+These are not *really* built-ins but are "standard commands" available to all programs. These standard
+commands can be implemented in Oughrril (although implementers are free to hard-code these
+directly into their interpreters as long as they can mimic every side-effect). 
+
+	Name		Command		Defined as				Description
+	NEGATE		Ng			-1*						Negates a number.
