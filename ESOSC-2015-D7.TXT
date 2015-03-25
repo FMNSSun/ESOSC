@@ -131,8 +131,10 @@ it uses the parsing rule /library/ and not /program/).
   -            Double a, Double b   Double subtraction: a - b                               Double
   *            Int a, Int b         Integer multiplication: a * b                           Int
   *            Double a, Double b   Double multiplication: a * b                            Double
+  *            List b               Convert string to double (without D-prefix)             Double
   /            Int a, Int b         Integer division: a / b                                 Int
   /            Double a, Double b   Double division: a / b                                  Double
+  /            List b               Parse string (convert to a value)                       Any
   %            Int a, Int b         Integer modulo: a `mod` b                               Int
   %            List b               Remove the last element from the list: init b           List
   @            Any b                Display b: print b
@@ -172,6 +174,11 @@ it uses the parsing rule /library/ and not /program/).
 Ints are displayed as one would expect: /5/ is displayed as 5.
 Doubles are displayed with 16 decimal places. /D5.0/ is displayed as 5.0000000000000000.
 Lists are displayed as one would expect: /[5  [6    9]]/ is displayd as [5 [6 9]].
+
+10.2 Comparisons
+================
+
+The following condition holds: Int > Double > List
 
 
 11 Built-in procedures
