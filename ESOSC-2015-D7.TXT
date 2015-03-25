@@ -23,7 +23,7 @@ esoteric programming language.
  s = ? any whitespace ?;
  ss = { s };
  n = ? any character except ^ ?;
- nss = n, ss
+ nss = n, { n };
  m = "." | ? upper case letter ?;
  name = m, { m };
 
@@ -53,7 +53,7 @@ esoteric programming language.
        comment | require;
  exps = { exp }
 
- value = int | double | list | string;
+ value = int | double | list | string | comment;
  int = [ "-" ], ds, ss;
  double = "D", ds, ".", ds, ss;
  list = "[", ss, { value }, ss, "]", ss;
@@ -178,7 +178,9 @@ Lists are displayed as one would expect: /[5  [6    9]]/ is displayd as [5 [6 9]
 10.2 Comparisons
 ================
 
-The following condition holds: Int > Double > List
+The following condition holds: Int > Double > List. 
+Lists are compared by comparing elements. This means: [0] < [1]
+and [2 2] < [3 2] and so forth. 
 
 
 11 Built-in procedures
