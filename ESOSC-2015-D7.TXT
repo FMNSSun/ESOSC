@@ -23,7 +23,7 @@ esoteric programming language.
  s = ? any whitespace ?;
  ss = { s };
  n = ? any character except ^ ?;
- nss = n, { n };
+ nss = { n };
  m = "." | ? upper case letter ?;
  name = m, { m };
 
