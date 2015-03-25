@@ -1,0 +1,176 @@
+  ESOTERIC STANDARD COMMITTEE
+     Taworvor
+     ESOSC-2015-D6
+
+     2015-03-25
+
+This standard has not yet been submitted for approval. WORK IN PROGRESS.
+(Pull requests and helpers are gladly welcomed).
+
+
+1 Taworvor
+-----------
+
+Taworvor is a stack-based, semi-verbose looking stack-based
+esoteric programming language. 
+
+
+2 Syntax
+--------
+
+ d = ? digits 0-9 ?;
+ ds = d, { d };
+ s = ? any whitespace ?;
+ ss = { s };
+ n = ? any character except ^ ?;
+ nss = n, ss
+ m = "." | ? upper case letter ?;
+ name = m, { m };
+
+ details = 
+   "^AUTHOR", nss,
+   "^NAME", nss,
+   "^DESC", nss,
+   "^IS", ss;
+ 
+ program =
+   "PROGRAM", ss, 
+   details, procs,
+   "END", ss;
+
+ library =
+   "LIBRARY", ss
+   details, procs
+   "END", ss;
+
+ proc = 
+   "PROCEDURE", ss, name, ss
+   exps, ss,
+   "END", ss;
+ procs = proc, { proc};
+  
+ exp = value | operator | load | store | call | if |
+       comment | require;
+ exps = { exp }
+
+ value = int | double | list | string;
+ int = [ "-" ], ds, ss;
+ double = "D", ds, ".", ds, ss;
+ list = "[", ss, { value }, ss, "]", ss;
+ string = "{", ? any character except }?, "}", ss;
+ comment = "REM", ss, { nss }, "^END", ss;
+
+ operator = ? one of "+-/*%@#$&|~`=<>\"\\:?'^_(!),;" ?, ss;
+ load = "LOAD", ss, name, ss;
+ store = "STORE", ss, name, ss;
+ call = "CALL", ss, name, ss;
+ require = "REQUIRE", ss, ? any character except ^ and white spaces ?,
+           "^OK", ss;
+ if = "IF", ss, exps, "ELSE", ss, exps, ss;
+
+
+4 Types
+-------
+
+ * Int: At least 32bit signed integer
+ * Double: Double precision floating point
+ * List: A list containing values.
+
+String IS NOT a data type. A String is a list of integeres where the integer
+value represents a unicode code point. Likewise, there's no such thing as a
+"char" data type. 
+
+
+5 Load and Store
+----------------
+
+/LOAD/ and /STORE/ can load or store values from/to a global storage space.
+/STORE FOO/ pops a value from the stack and stores it under the name /FOO/.
+Likewise /LOAD FOO/ looks for a value stored under the name /FOO/ and pushes
+it to the stack (if the value exists).
+
+
+6 Call
+------
+
+/CALL/ calls a procedure with the given name. /CALL INC/ calls the procedure
+named /INC/. 
+
+
+7 If
+----
+
+/IF/ pops a value from the stack. If it is /Int 1/ then the first code block
+is executed; if the value is /Int 0/ then the second code block is executed.
+/0 IF CALL A ELSE CALL B/ will do /CALL B/ whereas /1 IF CALL A ELSE CALL B/
+will do /CALL A/.
+
+
+8 Require
+---------
+
+/REQUIRE/ loads all the procedures within a library file. /REQUIRE FOO/BAR.LIB/
+will read the file FOO/BAR.LIB and load the procedures in it. 
+
+
+9 .PROG vs. .LIB
+----------------
+
+The recommended file extension for a program is .PROG where for libraries
+it is .LIB. /REQUIRE/ requires a library file (which means that
+it uses the parsing rule /library/ and not /program/). 
+
+10 Built-ins
+------------
+
+  OPERATOR     ARGUMENTS            DESCRIPTION                                             RETURNS
+  +            Int a, Int b         Integer addition: a + b                                 Int
+  +            Double a, Double b   Double addition: a + b                                  Double
+  +            List a, List b       Concatenate lists: a ++ b                               List
+  -            Int a, Int b         Integer subtraction: a - b                              Int
+  -            Double a, Double b   Double subtraction: a - b                               Double
+  *            Int a, Int b         Integer multiplication: a * b                           Int
+  *            Double a, Double b   Double multiplication: a * b                            Double
+  /            Int a, Int b         Integer division: a / b                                 Int
+  /            Double a, Double b   Double division: a / b                                  Double
+  %            Int a, Int b         Integer modulo: a `mod` b                               Int
+  %            List b               Remove the last element from the list: init b           List
+  @            Any b                Display b: print b
+  #            Int b                Print character: putChar (chr b)
+  $            Int a, Int b         Bitwise xor: a `xor` b                                  Int
+  &            Int a, Int b         Bitwise and: a .&. b                                    Int
+  |            Int a, Int b         Bitwise or: a .|. b                                     Int
+  ~            Int b                Bitwise complement: complement b                        Int
+  ~            List b               Length of the list: length b                            Int
+  `                                 Read a character from STDIN. getChar                    Int
+  ,                                 Read all characters from STDIN.                         Int
+  ;            Any a, Any b         AssertEquals. If a is not equal to b abort program. 
+  =            Any a, Any b         Equals. Pushes 1 if a equals b 0 otherwise.             Int
+  <            Any a, Any b         Less than. If a is smaller than b push 1                Int
+                                    otherwise push 0.
+  >            Any a, Any b         Greater than. If a is greater than b push 1             Int
+                                    otherwise push 0.
+  "            Any b                Duplicate top most element                              Any, Any
+  \            Any a, Any b         Swap top most two elements                              Any, Any
+  :            Any                  Convert to string                                       List
+  ?                                 Pushes 1 if the stack is not empty 0 otherwise.         Int
+  '            Any                  Pop element from stack
+  ^            Double b             Cealing: cealing b                                      Int
+  ^            List b               Returns the first element: head b                       Any
+  _            Double b             Floor: floor b                                          Int
+  _            Int b                Convert to double.                                      Double
+  _            List b               Removes the first element: tail b                       List
+  (            Any b                Box. Puts b inside an empty list.                       List
+  !            List a, Int b        Returns the b-th element of a: a !! b                   Any
+  )            List b               Display string. 
+
+10.1 Displaying
+---------------
+
+(Note: /:/ behaves in the same way as displaying.)
+
+Ints are displayed as one would expect: /5/ is displayed as 5.
+Doubles are displayed with 16 decimal places. /D5.0/ is displayed as 5.0000000000000000.
+Lists are displayed as one would expect: /[5  [6    9]]/ is displayd as [5 [6 9]].
+
+
