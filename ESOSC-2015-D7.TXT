@@ -1,6 +1,6 @@
   ESOTERIC STANDARD COMMITTEE
      Taworvor
-     ESOSC-2015-D6
+     ESOSC-2015-D7
 
      2015-03-25
 
@@ -120,8 +120,8 @@ The recommended file extension for a program is .PROG where for libraries
 it is .LIB. /REQUIRE/ requires a library file (which means that
 it uses the parsing rule /library/ and not /program/). 
 
-10 Built-ins
-------------
+10 Built-in operators
+---------------------
 
   OPERATOR     ARGUMENTS            DESCRIPTION                                             RETURNS
   +            Int a, Int b         Integer addition: a + b                                 Int
@@ -165,7 +165,7 @@ it uses the parsing rule /library/ and not /program/).
   )            List b               Display string. 
 
 10.1 Displaying
----------------
+===============
 
 (Note: /:/ behaves in the same way as displaying.)
 
@@ -174,3 +174,11 @@ Doubles are displayed with 16 decimal places. /D5.0/ is displayed as 5.000000000
 Lists are displayed as one would expect: /[5  [6    9]]/ is displayd as [5 [6 9]].
 
 
+11 Built-in procedures
+----------------------
+
+For built-in procedures the prefix /I../ is reserved. 
+Revisions of this standard may or may not introduce built-in procedures.
+Also reserved is /X../ which compilers and/or interpreters may use for
+implementation dependant built-in procedures (e.g. /CALL X..FILE/
+which returns the name of the source file). 
