@@ -103,6 +103,19 @@ it to the stack (if the value exists).
 /CALL/ calls a procedure with the given name. /CALL INC/ calls the procedure
 named /INC/. 
 
+6.1 Fastcall
+============
+
+/Fastcall/ does not require /CALL/. If the name of a function is written
+in lower case letters it is automatically translated to a /CALL/.
+Therefore
+
+  qqx
+
+is the same as
+
+  CALL QQX
+
 
 7 If
 ----
