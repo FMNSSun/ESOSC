@@ -25,6 +25,8 @@ esoteric programming language.
  n = ? any character except ^ ?;
  nss = { n };
  m = "." | ? upper case letter ?;
+ l = ? lower case letter ?;
+ ls = l, { l }
  name = m, { m };
 
  details = 
@@ -49,7 +51,7 @@ esoteric programming language.
    "END", ss;
  procs = proc, { proc};
   
- exp = value | operator | load | store | call | if |
+ exp = value | operator | load | store | call | fastcall | if |
        comment | require;
  exps = { exp }
 
@@ -65,6 +67,7 @@ esoteric programming language.
  load = "LOAD", ss, name, ss;
  store = "STORE", ss, name, ss;
  call = "CALL", ss, name, ss;
+ fastcall = ls, ss;
  require = "REQUIRE", ss, ? any character except ^ and white spaces ?,
            "^OK", ss;
  if = "IF", ss, exps, "ELSE", ss, exps, ss;
