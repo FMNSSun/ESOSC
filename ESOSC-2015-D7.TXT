@@ -55,7 +55,7 @@ esoteric programming language.
        comment | require;
  exps = { exp }
 
- value = int | double | list | string | func | comment;
+ value = int | double | string | func | comment;
  func = "FUNC", ss, exps, ss, "END", ss;
  int = [ "-" ], ds, ss;
  double = "D", ds, ".", ds, ss;
@@ -63,7 +63,7 @@ esoteric programming language.
  string = "{", ? any character except }?, "}", ss;
  comment = "REM", ss, { nss }, "^END", ss;
 
- operator = ? one of "+-/*%@#$&|~`=<>\"\\:?'^_(!),;" ?, ss;
+ operator = ? one of "+-/*%@#$&|~`=<>\"\\:?'^_(!),;"[] ?, ss;
  load = "LOAD", ss, name, ss;
  store = "STORE", ss, name, ss;
  call = "CALL", ss, name, ss;
@@ -80,6 +80,7 @@ esoteric programming language.
  * Double: Double precision floating point
  * List: A list containing values.
  * Func: A piece of code. (Anonymous function/procedure)
+ * Mark
 
 String IS NOT a data type. A String is a list of integeres where the integer
 value represents a unicode code point. Likewise, there's no such thing as a
@@ -87,6 +88,11 @@ value represents a unicode code point. Likewise, there's no such thing as a
 
 A /Func/ is an anonymous procedure. How these are implemented is 
 implementation dependant. 
+
+Note: Constructing list works by using the operators [ and ]. [ pushes
+a /Mark/ to the stack and ] "collects" elements from the top until it reaches
+the Mark (and then removes the Mark). However: The built-in operator / does
+not use this mechanism but uses the /list/ parsing rule (see section above). 
 
 5 Load and Store
 ----------------
@@ -186,6 +192,11 @@ it uses the parsing rule /library/ and not /program/).
   !            List a, Int b        Returns the b-th element of a: a !! b                   Any
   !            Func b               Execute the function b.
   )            Any b                Return the type of b. 1=Int, 2=Double, 3=List,4=Func    Int
+                                    5=Mark
+  [                                 Pushes a Mark to the stack                              Mark
+  ]                                 Collects element in a list starting from the            List
+                                    top until it reaches a Mark. Then removes the Mark
+                                    and pushes the list.
 
 10.1 Displaying
 ===============
@@ -202,6 +213,8 @@ Lists are displayed as one would expect: /[5  [6    9]]/ is displayd as [5 [6 9]
 The following condition holds: Int > Double > List. 
 Lists are compared by comparing elements. This means: [0] < [1]
 and [2 2] < [3 2] and so forth. 
+
+Comparing with values of type Func is implementation dependant. 
 
 
 11 Built-in procedures
