@@ -53,7 +53,8 @@ esoteric programming language.
        comment | require;
  exps = { exp }
 
- value = int | double | list | string | comment;
+ value = int | double | list | string | func | comment;
+ func = "FUNC", ss, exps, ss, "END", ss;
  int = [ "-" ], ds, ss;
  double = "D", ds, ".", ds, ss;
  list = "[", ss, { value }, ss, "]", ss;
@@ -75,11 +76,14 @@ esoteric programming language.
  * Int: At least 32bit signed integer
  * Double: Double precision floating point
  * List: A list containing values.
+ * Func: A piece of code. (Anonymous function/procedure)
 
 String IS NOT a data type. A String is a list of integeres where the integer
 value represents a unicode code point. Likewise, there's no such thing as a
 "char" data type. 
 
+A /Func/ is an anonymous procedure. How these are implemented is 
+implementation dependant. 
 
 5 Load and Store
 ----------------
@@ -164,7 +168,10 @@ it uses the parsing rule /library/ and not /program/).
   _            List b               Removes the first element: tail b                       List
   (            Any b                Box. Puts b inside an empty list.                       List
   !            List a, Int b        Returns the b-th element of a: a !! b                   Any
+  !            Func b               Execute the function b.
   )            List b               Display string. 
+  )            Double b             Abs: abs b                                              Double
+  )            Int b                Abs: abs b                                              Int
 
 10.1 Displaying
 ===============
@@ -191,3 +198,21 @@ Revisions of this standard may or may not introduce built-in procedures.
 Also reserved is /X../ which compilers and/or interpreters may use for
 implementation dependant built-in procedures (e.g. /CALL X..FILE/
 which returns the name of the source file). 
+
+
+12 Naming recommendations
+-------------------------
+
+Since "variables" are global calling a procedure might overwrite
+a "variable" that the caller still needs. Thus:
+
+ * Prefix local variables with a dot
+   These might be overwritten by any procedure you call so these are
+   just for temporary storage.
+ * Prefix variables with the name of the function and a dot.
+   E.g.
+
+     PROCEDURE FOO
+       + STORE FOO.A
+       LOAD FOO.A LOAD FOO.A +
+     END
