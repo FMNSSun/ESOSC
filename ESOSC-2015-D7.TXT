@@ -63,7 +63,7 @@ esoteric programming language.
  string = "{", ? any character except }?, "}", ss;
  comment = "REM", ss, { nss }, "^END", ss;
 
- operator = ? one of "+-/*%@#$&|~`=<>\"\\:?'^_(!),;"[] ?, ss;
+ operator = ? one of "+-/*%@#$&|~`=<>\"\\:?'^_(!),;"[]} ?, ss;
  load = "LOAD", ss, name, ss;
  store = "STORE", ss, name, ss;
  call = "CALL", ss, name, ss;
@@ -197,6 +197,7 @@ it uses the parsing rule /library/ and not /program/).
   ]                                 Collects element in a list starting from the            List
                                     top until it reaches a Mark. Then removes the Mark
                                     and pushes the list.
+  }                                 Push the contents of the stack as a list to the stack   List
 
 10.1 Displaying
 ===============
