@@ -165,6 +165,9 @@ it uses the parsing rule /library/ and not /program/).
   %            List b               Remove the last element from the list: init b           List
   @            Any b                Display b: print b
   #            Int b                Print character: putChar (chr b)
+  #            List b               Uncons. Takes the first element off the list            List, Any
+                                    and pushes it while keeping the rest of the list on
+                                    the stack
   $            Int a, Int b         Bitwise xor: a `xor` b                                  Int
   &            Int a, Int b         Bitwise and: a .&. b                                    Int
   |            Int a, Int b         Bitwise or: a .|. b                                     Int
