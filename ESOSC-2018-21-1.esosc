@@ -1,0 +1,86 @@
+  ESOTERIC STANDARD COMMITTEE   
+     Esoteric Container Format For Snippets (ECFFS)
+     ESOSC-2018-D21
+
+
+Introduction
+------------
+
+This documents describes the structure of a container format using ESN (see ESOSC-2018-x20) 
+for code snippets containing esoteric code optionally together with their input (stdin), 
+output (stdout), error (stderr) as well as language options to run the snippet correctly 
+and optional runtime information and a link to the interpreter. 
+
+
+Structure
+---------
+
+     [FIG]
+
+     container := 
+       STRUCT sid:esosc-ecffs-container {
+         0x00, mandatory, "language name": STRING
+         0x01, mandatory, "program": BINARY
+         0x02, optional, "language options" : STRUCT sid:esosc-lang-options
+         0x03, optional, "program input": BINARY
+         0x04, optional, "program output": BINARY
+         0x05, optional, "program error": BINARY
+         0x06, optional, "run time information": STRUCT sid:esosc-runtime-info
+         0x07, optional, "link": STRING
+         0x08, optional, "program text encoding": STRING
+       }
+
+     [/FIG]
+
+
+Field: language name
+....................
+ 
+The 'language name' field contains the name of the programming language. 
+
+Field: program
+..............
+
+The 'program' field contains the actual code snippet. If the source code is textual in nature
+the 'program text encoding' field should be populated with the name of an encoding such as one
+of the following: ascii, utf-8, or latin1. This list of encodings is not exclusive. 
+
+Field: program input
+....................
+
+Contains the data that must be fed to the program's standard input stream.
+
+Field: program output
+.....................
+
+Contains the output of the program. This may be used to specify test cases. An entitiy executing
+the program may verify that the output of the run matches the output specified in the 'program output'
+field. 
+
+Field: program error
+....................
+
+Contains the error of the program. This may be used to specify test cases. However, it should be noted
+that different interpreters might report errors differently. An entity executing the program may verify
+that the output on the error stream matches the output specified in the 'program error' field.
+
+Field: run time information
+...........................
+
+Contains run time information of an example run of the program. The value of this field is merely informational.
+
+Field: link
+...........
+
+Contains an URL that points to a website where one can download the tools necessary to run the program. The value
+of this field is merely informational.
+
+Field: program text encoding
+............................
+
+If the source code is plaintext this specifies the text encoding (utf-8 for example). 
+
+Field: language options
+.......................
+
+See ESOSC-2018-x22. 
