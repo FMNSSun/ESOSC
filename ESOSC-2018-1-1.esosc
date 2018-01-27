@@ -1,0 +1,72 @@
+  ESOTERIC STANDARD COMMITTEE
+     The .esosc Format
+     ESOSC-2018-1-1 (DRAFT)
+
+
+The .esosc Format
+-----------------
+
+ESOSC documents must be written and submitted in the .esosc format. An .esosc
+document starts with the line 'ESOTERIC STANDARD COMMITTEE' indented by exactly
+two spaces. The second line contains the human readable title of the standard
+indented by exactly five spaces. The third line contains the EUIN indented
+by exactly five spaces follewed by a space followed by the status of the
+document in parentheses. The first three lines are considered the header of the
+document. After the header there must be exactly two blank lines then followed
+by the content.
+
+
+Formatting
+==========
+
+
+Sections
+~~~~~~~~
+
+There exist for levels of sections. To mark a title of a section the line following
+the title must contain at least three of the following characters '-=~.'. '-' indicates
+a level 1 section title, '=' indicates a level 2 section title and '~' indicates a
+level 3 section title and '.' indicates a pseudo-section that does not receive a
+numbering and isn't on any specific level. 
+
+
+Figures
+~~~~~~~
+
+Figures start by the name of a figure in square brackets indented by exactly six spaces
+and end by the name of the figure in brackets with the name preceeded by a slash. These
+are called begin and end tags. The begin tag must be preceeded and followed by a blank line and the
+end tag must be also be preceeded and followed by a blank line. 
+
+      [FIG]
+
+	        [FIG]
+            
+            This is a figure. 
+            
+            [/FIG]
+
+      [/FIG]
+
+      
+Sippets
+~~~~~~~
+
+Snippets are consecutive lines each indented by exactly four spaces. 
+
+      [FIG-SNIPPETS]
+      
+      Some code example:
+      
+          int main() { } 
+          
+      Lorem ipsum. 
+      
+      [/FIG SNIPPETS]
+      
+      
+Referencing Sections or Figures
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Sections can be referenced by writing ``ref:name of the section or figure``. To escape regular backticks one
+can use double backticks such as ````ref:name of the section or figur````. 
