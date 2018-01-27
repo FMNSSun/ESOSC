@@ -1,0 +1,161 @@
+  ESOTERIC STANDARD COMMITTEE   
+     Esoteric Syntax Notation
+     ESOSC-2018-D20
+
+
+Introduction
+------------
+
+This standard describes a language to specify data structures and a 
+serialization and deserialization profile. 
+
+Data Types
+----------
+
+The following primitive data types exist:
+
+ - INTEGER
+ - BOOL
+ - UINTEGER
+ - BINARY
+ - STRING
+ - FLOAT
+ - LIST
+
+Further there is STRUCT which is a composite data type. 
+
+Size Options
+============
+
+Data types may have size options that are denoted in brackets.
+
+  - TYPE[n] indicates that the type is of at least size n.
+  - TYPE[n,m] indicates that the type is of at least size n but at most of size m.
+  - TYPE[*,m] indicates that the type is at most of size m.
+  - TYPE[n,*] indicates that the type is at least of size n. 
+
+However, not all sizes are valid for each type. There's no INTEGER of size 0 for example
+and no INTEGER of size 3. 
+
+INTEGER
+=======
+
+INTEGER is a data type for signed integer values. They exist in the different sizes of
+1, 2, 4, 8 bytes. INTEGER may have an exact required size or a minimum and maximum size.
+
+BOOL
+====
+
+BOOL is a data type for truth values. It is either TRUE or FALSE. 
+
+UINTEGER
+========
+
+UINTEGER is a data type for unsigned integer values. They exist in the different sizes
+of 1, 2, 4, 8 bytes. UINTEGER may have an exact required size or a minimum and maximum size. 
+
+BINARY
+======
+
+BINARY is a data type for raw binary data as bytes. 
+
+STRING
+======
+
+STRING is a data type for text strings. They must be encoded using utf-8. 
+
+STRUCT
+======
+
+A STRUCT is a composite data type consisting of 'fields'. Each field has an identifier and
+a data type. 
+
+     [EX-1]
+
+     someStruct := 
+       STRUCT sid:unspecified-0 {
+         0x00, mandatory: INTEGER[4]
+         0x01, mandatory: INTEGER[4]
+         0x02, optional: 
+           STRUCT sid:unspecified-1 {
+             0x00, mandatory: FLOAT[4]
+             0x01, optional: FLOAT[8]
+           }
+       }
+
+     [/EX-1]
+
+A STRUCT has a structure identifier (SID). Structure identifier identify commonly used structures. SIDs are assigned by
+the ESOSC. They are useful for fields that may be either a struct of one type or a struct of another type using a choice operator.
+
+     [EX-2]
+
+     someStruct :=
+       STRUCT sid:unspecified-0 {
+         0x00, mandatory-choice: STRUCT sid:unspecified-1 , STRUCT sid:unspecified-2
+       }
+
+     someStruct1 :=
+       STRUCT sid:unspecified-1 {
+         0x00, mandatory: INTEGER[1]
+         0x01, mandatory: INTEGER[1]
+       }
+
+     someStruct2 :=
+       STRUCT sid:unspecified-2 {
+         0x00, mandatory: STRING[4]
+         0x01, mandatory: STRING[4]
+       }
+
+     [/EX-2]
+
+FLOAT
+=========
+
+LIST
+========
+
+LIST is a data type that contains an amount of values of other data types. LIST may have an exact required size
+or a maximum and minimum size (in element) denoted in brackets. LIST(INTEGER[4])[2] specifies a list that must
+contain exactly two integers. LIST(INTEGER[2,4])[2,3] specifies a list that must contain at least two integers
+but at most 4 integers where each integer may either be of at least size 2 or at most size 4. 
+
+
+The ESN language
+----------------
+
+(De-)serialization of ESN structures
+------------------------------------
+
+Each value has a one byte prefix indicating the data type. These prefixes are:
+
+	- 0000SSSS for INTEGER
+   - 00010000 for BOOL
+   - 0010SSSS for UINTEGER
+   - 00110000 for BINARY
+   - 01000000 for STRING
+   - 0101SSSS for FLOAT
+   - 01100000 for LIST
+
+The lower nibble represent additional flags. The SSS is a three bit value indicating the size in bytes of the types
+and indicates how many bytes follow the prefix.
+
+
+     [EX-3]
+
+     00000010 iiiiiiii iiiiiiii              - A two byte INTEGER
+     00000011 iiiiiiii iiiiiiii iiiiiiiii    - Invalid. 3 is not a valid INTEGER size.
+
+     [/EX-3]
+
+When deserializing an implementation should verify that the size matches the specification of the data structure. 
+
+     [EX-4]
+
+     Specification:
+
+      value := INTEGER[4,8]
+
+     Data:
+
+      00000010 iiiiiiii iiiiiiii             - Invalid. 'value' must be at least of size 4.
