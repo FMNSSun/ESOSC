@@ -19,7 +19,7 @@ The following primitive data types exist:
  - UINTEGER
  - BINARY
  - STRING
- - FLOAT
+ - RATIONAL
  - LIST
 
 Further there is STRUCT which is a composite data type. 
@@ -42,6 +42,7 @@ INTEGER
 
 INTEGER is a data type for signed integer values. They exist in the different sizes of
 1, 2, 4, 8 bytes. INTEGER may have an exact required size or a minimum and maximum size.
+The default is an exact size of 4. 
 
 BOOL
 ====
@@ -53,16 +54,18 @@ UINTEGER
 
 UINTEGER is a data type for unsigned integer values. They exist in the different sizes
 of 1, 2, 4, 8 bytes. UINTEGER may have an exact required size or a minimum and maximum size. 
+The default is an exact size of 4. 
 
 BINARY
 ======
 
-BINARY is a data type for raw binary data as bytes. 
+BINARY is a data type for raw binary data as bytes. BINARY may have an exact required size or a minimum and maximum size.
+The default is no restriction. 
 
 STRING
 ======
 
-STRING is a data type for text strings. They must be encoded using utf-8. 
+STRING is a data type for text strings. They must be encoded using utf-8. STRING has no size restrictions. 
 
 STRUCT
 ======
@@ -109,8 +112,13 @@ the ESOSC. They are useful for fields that may be either a struct of one type or
 
      [/EX-2]
 
-FLOAT
+The field identifier 0xFF is reserved and MUST not be used. 
+
+RATIONAL
 =========
+
+A RATIONAL is a data type used to represent rational numbers. RATIONAL data types may have one of the sizes 
+1, 2, 4, 8.
 
 LIST
 ========
@@ -130,32 +138,155 @@ The ESN language
 Each value has a one byte prefix indicating the data type. These prefixes are:
 
 	- 0000SSSS for INTEGER
-   - 00010000 for BOOL
+   - 0001000V for BOOL
    - 0010SSSS for UINTEGER
-   - 00110000 for BINARY
-   - 01000000 for STRING
-   - 0101SSSS for FLOAT
-   - 01100000 for LIST
+   - 0011SSSS for BINARY
+   - 0100SSSS for STRING
+   - 0101SSSS for RATIONAL
+   - 0110SSSS for LIST
+   - 1111SSSS for STRUCT
 
-The lower nibble represent additional flags. The SSS is a three bit value indicating the size in bytes of the types
+The lower nibble may represent additional flags. Deserializers MUST reject inputs that don't follow the given
+specification. If the data structure specification for example requires that a value of type INTEGER must be exactly of size two
+but the value was encoded using an INTEGER of size 1 the deserializer MUST reject it because it violates
+the specification. Exact sizes may be used to allow easy to access to specific field by using fixed indexes for example:
+
+      [EX-INDEX]
+
+      validate(data) // validate that the data structure follows the data structure specification. 
+      int val = data[0xF3] // quick access to a 4 byte signed integer (if host machine has the correct endianness)
+
+      [/EX-INDEX]
+
+
+INTEGER and UINTEGER
+================================
+
+The SSSS is a 4bit value and indicates the size in bytes of the types
 and indicates how many bytes follow the prefix.
 
 
-     [EX-3]
+      [EX-3]
 
-     00000010 iiiiiiii iiiiiiii              - A two byte INTEGER
-     00000011 iiiiiiii iiiiiiii iiiiiiiii    - Invalid. 3 is not a valid INTEGER size.
+      00000010 iiiiiiii iiiiiiii              - A two byte INTEGER
+      00000011 iiiiiiii iiiiiiii iiiiiiiii    - Invalid. 3 is not a valid INTEGER size.
 
-     [/EX-3]
+      [/EX-3]
 
 When deserializing an implementation should verify that the size matches the specification of the data structure. 
 
-     [EX-4]
+      [EX-4]
 
-     Specification:
+      Specification:
 
-      value := INTEGER[4,8]
+       value := INTEGER[4,8]
 
-     Data:
+      Data:
 
-      00000010 iiiiiiii iiiiiiii             - Invalid. 'value' must be at least of size 4.
+       00000010 iiiiiiii iiiiiiii             - Invalid. 'value' must be at least of size 4.
+
+      [/EX-4]
+
+Both INTEGER and UINTEGER use little endian byte order and INTEGER uses two's complement. 
+
+RATIONAL
+=======================
+
+For the RATIONAL type the SSSS is a 4bit value indicating the size of the divident and divisor individually.
+
+      [EX-5]
+
+      01010010 aaaaaaaa aaaaaaaa bbbbbbbb bbbbbbbb    - 2 bytes divident and divisor.
+      01010001 aaaaaaaa bbbbbbbb                      - 1 byte divident and divisor.
+      01010001 aaaaaaaa                               - Invalid.
+
+      [/Ex-5]
+
+The value of a RATIONAL is the divident divided by the divisor. The divident and divisor are two's complement signed integers using
+little endian byte order. 
+
+
+BOOL
+====
+
+The value of the bool is encoded in its prefix using the V bit. If the V bit is set it indicates TRUE and if it is not set
+it indicates FALSE. 
+
+BINARY and STRING
+=================
+
+The 4bit SSSS value specifies the number of the bytes used to encode the length of the data in bytes. The prefix is followed by an unsigned
+integer in little endian byte order with a size as indicated by the SSSS value. Then it is followed by the data. SSSS may have a value
+of 1, 2, 4 or 8. Any other value is invalid. 
+
+      [EX-6]
+
+      00110001 00000011 <data byte 0> <data byte 1> <data byte 2> - 3 bytes of BINARY with 1 byte used to encode the length.
+             ^- use 1 byte to encode length
+                     ^- 3 bytes of data
+
+      00110010 00000001 00000000 <data byte 0>                    - 1 byte of BINARY with 2 bytes used to encode the length.
+            ^- use 2 bytes to encode length. 
+
+      00110011 .....                                              - Invalid. 3 is not a valid size. 
+
+      [/EX-6]
+
+If the data type is STRING it MUST be verified that the STRING is valid utf-8 otherwise serializers or deserializers MUST reject the input. 
+
+LIST
+====
+
+The 4bit SSSS value specifies the number of bytes used to encode the number of elements of the list. The prefix is followed by an unsigned
+integer in little endian byte order with a size as indicated by the SSSS value. Then it is followed by the elements. The SSSS may have a value
+of 1, 2, 4 or 8. Any other value is invalid. 
+
+      [EX-7]
+
+      01100001 00000011 00000001 11111111 00000001 00000000 00000001 10000000 - A LIST with the INTEGERs 255, 0 and 128.
+      0110 - LIST
+          0001 - use ony byte to encode number of elements
+               00000011 - 3 elements
+                        00000001 11111111 - 1 byte integer, value 255
+                                          00000001 00000000 - 1 byte integer, value 0
+
+      01100001 00000011 00000001 11111111 00000001 00100010 - Invalid. Too few elements. 
+
+      [/EX-7]
+
+
+STRUCT
+======
+
+The 4bit SSSS value specifies the number of bytes used to encode the SID. The prefix is followed by the SID (as an unsigned integer) encoded using SSSS bytes in
+little endian byte order. Then it is followed by the fields where each field is prefixed with its field identifier. To mark the end of a struct
+the reserved field identifier 0xFF which is the end of struct marker. 
+
+      [EX-8]
+
+      11110001 00000000 00000000 00000001 1000000 00000002 00000001 00000001 11111111 - A STRUCT with two integer fields.
+
+      1111 - STRUCT
+          0001 - one byte SID
+               00000000 - SID := 0
+                        00000000 - field id: 0x00
+                                 00000001 1000000 - 1 byte integer, value 128
+
+      STRUCT sid:unspecified-0 {
+        0x00, mandatory: INTEGER[1]
+        0x01, optional:  INTEGER[1]
+        0x02, mandatory: INTEGER[1]
+      }
+
+      [/EX-8]
+
+The fields MUST be serialized in order:
+
+      [EX-9]
+
+      11110001 00000000 0000002 00000001 10000000 00000000 00000001 00000001 11111111 - Invalid, field 0x02 is before field 0x00
+      11110001 00000000 0000002 00000001 10000000 00000000 00000001 00000001 - Invalid. Unexpected end of data. (end of struct marker missing). 
+
+      [/EX-9]
+
+Deserializers MUST reject the input if the fields are not in order. The end of struct marker is mandatory, even if all optional fields are present. 
