@@ -283,7 +283,10 @@ The 4bit SSSS value specifies the number of bytes used to encode the SID. The
 prefix is followed by the SID (as an unsigned integer) encoded using SSSS bytes
 in little endian byte order. Then it is followed by the fields where each field
 is prefixed with its field identifier. To mark the end of a struct the reserved
-field identifier 0xFF which is the end of struct marker. 
+field identifier 0xFF which is the end of struct marker. SIDs must always be
+encoded using the smallest size possible. Encoding 128 using two bytes is invalid.
+Deserializers MUST reject inputs that contains SID that aren't encoded using the
+smallest size possible. 
 
       [EX-8]
 
@@ -329,3 +332,6 @@ SIDs are managed by the ESOSC. This document specifies the following SIDs:
 These unspecified SIDs may be used by anyone without having to register them at 
 the ESOSC. These may be used for proprietary, non-public or vendor specific
 data structures. 
+
+The range 0x04 - 0xFFFF is reserved for data structures that are part of an ESOSC
+approved standard. 
