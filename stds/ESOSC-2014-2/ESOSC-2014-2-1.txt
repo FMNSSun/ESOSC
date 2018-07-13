@@ -1,6 +1,6 @@
   ESOTERIC STANDARD COMMITTEE
      Normalized Brainfuck
-     ESOSC-2014-A2
+     ESOSC-2014-2-1
 
 This standard has been approved by the following members of the ESOSC:
  * nortti

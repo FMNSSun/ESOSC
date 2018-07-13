@@ -1,6 +1,6 @@
   ESOTERIC STANDARD COMMITTEE
      Lambda Calculus Syntax
-     ESOSC-2014-A5
+     ESOSC-2014-5-1
 
      2015-03-11
 
