@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>ESOSC-2014-5</title>
+        <link rel="stylesheet" href="../../assets/style.css">
+    </head>
+    <body>
+    <header>
+        <img id="logo" src="../../assets/logo.png"/>
+        <span id="logo_text">Esoteric Standard Committee</span>
+        <span id="doc_euin">ESOSC-2014-5-1</span>
+    </header>
+    <main>
+        <h1>Lambda Calculus</h1>
+        <p>
+            Lambda Calculus is a formal system used in mathematical logic and plays
+            and played an important role in the development of programming
+            langugage theory <a href="#fn_lc">[LC]</a>.
+        </p>
+        
+        <h1>Lambda Calculus Syntax</h1>
+        <p>
+            This standard aims to standardize the syntax/notation of lambda calculus.
+            Figure <a href="#fig_grmr">GRMR</a> specifies the grammar of lambda calculus given in EBNF. 
+            The EBNF rule /term/ is the top-level rule and shall be the entry point
+            for parsing lambda calculus terms. 
+
+            If UTF-8 support is readily available then it is recommended to use λ instead of \.
+        </p>
+
+        <figure id="fig_grmr">
+        <figcaption>GRMR</figcaption>
+<pre>
+space = ? spaces (whitespaces, newlines, tabs) ?;
+
+vLetter = ? printable letters except 
+               "\", "λ", "(", ")" and ".".
+          ?;
+
+variable = vLetter, { vLetter };
+
+term = { space }, 
+    ( variable
+    | application
+    | parens
+    | lambda
+    ), { space };
+
+lambda = 
+    L, { space }, variable , ".", term;
+  | L, { space }, (variable, { space }), { variable, { space } },
+    [ variable ], ".", term;
+
+parens = "(", term, ")";
+
+L = "λ" | "\";
+
+application = term, term;
+</pre>
+        </figure>
+
+        <h2>Abbreviation</h2>
+        
+        <p>
+            The syntax defined by the ESOSC allows the use of "abbreviated forms" such as
+            λx y z.f instead of λx.λy.λz.f but which are semantically identic.
+        </p>
+        
+        <h1>References</h1>
+        <ul>
+            <li id="fn_lc">lc: http://en.wikipedia.org/wiki/Lambda_calculus</li>
+        </ul>
+    </main>
+    </body>
+</html>

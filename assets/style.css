@@ -1,0 +1,85 @@
+header {
+    border-top: solid 0.25rem black;
+    border-bottom: solid 0.5rem black;
+}
+
+#logo {
+    height: 5em;
+    vertical-align: middle;
+}
+
+#logo_text {
+    vertical-align: middle;
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+#doc_euin {
+    vertical-align: middle;
+    float: right;
+    font-weight: bold;
+}
+
+main {
+    margin-top: 1rem;
+    text-align: justify;
+    padding: 0.35rem;
+}
+
+h1, h2, h3, h4, h5 {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+h1:before {
+    content: '/ ';
+}
+
+h2:before {
+    content: '// ';
+}
+
+h3:before {
+    content: '/// ';
+}
+
+h4:before {
+    content: '//// ';
+}
+
+h5:before {
+    content: '///// ';
+}
+
+figcaption {
+    font-style: italic;
+    font-size: 0.75rem;
+    border-bottom: solid 1px black;
+}
+
+a, a:visited {
+    color: red;
+    text-decoration: underline;
+}
+
+figcaption:before {
+    content: 'Fig.: '
+}
+
+html {
+    font-size: 1em;
+    background-color: #e2e1ce;
+    font-family: monospace, monospace;
+}
+
+p {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+body {
+    max-width: 100ch;
+    font-size: 1em;
+}

@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>ESOSC-2014-1</title>
+        <link rel="stylesheet" href="../../assets/style.css">
+    </head>
+    <body>
+    <header>
+        <img id="logo" src="../../assets/logo.png"/>
+        <span id="logo_text">Esoteric Standard Committee</span>
+        <span id="doc_euin">ESOSC-2014-1-2</span>
+    </header>
+    <main>
+        <h1>About ESOSC</h1>
+
+The Esoteric Standard Committee (usually referred to as ESOSC) "approves" esolang
+related standards to strive for a higher quality of descriptions (specifications)
+of esoteric programming languages and esolang related works. This is to ensure 
+that descriptions of esoteric programming languages (or related works) are 
+detailed and unambigious enough for others to implement and understand them 
+correctly. 
+
+
+Approval doesn't mean the ESOSC recommends using a standard. In fact,
+you probably shouldn't because they aren't intended for serious purposes. Like
+esoteric programming languages themselves, they are more intended for the
+purpose of entertainment. 
+
+
+Ask your psychiatrist whether esoteric programming languages (esolangs) are
+right for you. 
+
+
+        <h1>EUIN</h1>
+
+The ESOSC Unique Identification Number uniquely identifies (usually referred to
+as EUIN) a standard with respect to specific versions of certain standards.  
+
+
+        <h2>Format</h2>
+
+        <p>
+            The format of an EUIN is as follows:  
+        </p>
+        
+<pre>
+&lt;EUIN&gt; ::= 
+  `ESOSC' &lt;hyph&gt; &lt;year&gt; &lt;hyph&gt; &lt;an&gt; 
+          &lt;hyph&gt; &lt;version&gt; [&lt;hyph&gt; &lt;suffix&gt;]
+&lt;hyph&gt; ::= `-' 
+&lt;an&gt; ::= &lt;number&gt;
+&lt;version&gt; ::= &lt;number&gt;
+&lt;number&gt; ::= &lt;digit&gt; | &lt;digit&gt; &lt;number&gt; 
+&lt;digit&gt; ::= `0'|`1'|`2'|`3'|`4'|`5'|`6'|`7'|`8'|`9' 
+&lt;year&gt; ::= &lt;digit&gt; &lt;digit&gt; &lt;digit&gt; &lt;digit&gt; 
+&lt;suffix&gt; ::= `D' | `A' | `O'
+</pre>
+	
+        <p>
+            'year' denotes the year when the first version of the standard was created
+            (but not necessarily approved in the same year). 'an' is a unique number 
+            allocated within the year the first version of the standard was created. The
+            'version' is a monotonically increasing number starting at 1 and denotes
+            the version of the standard. 'an' is refered to as the Assigned Number (AN). 
+        </p>
+
+        <p>
+            To indicate the state of a document it may be suffixed with a suffix. 
+            D indicates that the document is in draft state, A indicates that the document
+            is an approved standard, O indicates that the document is obsolete. Use of
+            suffix is generally not recommended. 
+        </p>
+
+        <p>
+            'year' together with 'an' uniquely identifies a standard whereas 'year', 'an' 
+            and 'version' combined uniquely identify a document (which is a specific version
+            of a standard).
+        </p>
+
+        <h3>Assigned Number</h3>
+
+        <p>
+            The Assigned Number is allocated from the Assigned Number Block (ANB) of the member
+            creating the first draft of the standard. 
+        </p>
+
+        <h2>Assigned Number Block</h2>
+
+        <p>
+            Each member has a number block from which they can allocate Assigned Numbers
+            for drafts. Each member receives a (continious) block of 128 numbers upon 
+            becoming a member. 
+        </p>
+
+        <p>
+            The ESOSC manages a list of Assigned Number Blocks. 
+        </p>
+
+        <h1>Approval of standards</h1>
+
+        <p>
+            For a standard to be approved at least three members of the ESOSC have to
+            approve it without having been bribed, forced, blackmailed or influenced by
+            drugs, alcohol or similar substances to do so. 
+        </p>
+
+        <h1>Obsoletion</h1>
+
+        <p>
+            Standards may be marked as obsolete when they are no longer
+            appropriate to use or have been completely replaced by another standard and can
+            The submitter of the standard can obsolete the standard. 
+        </p>
+
+        <h1>Drafts</h1>
+
+        <p>
+            Any member of the ESOSC is allowed to submit drafts for approval.
+            Any non-member of the ESOSC is allowed to request that the ESOSC should work
+            on a new standard and may submit suggestions or proposals for standards to
+            the ESOSC.  
+        </p>
+
+        <h2>Proposals</h2>
+
+        <p>
+            Proposals have no assigned EUIN. A proposal does not differ greatly from a draft.
+            A proposal is a draft from a non-member that has not yet received official draft
+            status. With receiving official draft status a proposal also receives an EUIN. 
+        </p>
+
+        <p>
+            To achieve official draft status one member of the ESOSC must agree and assign
+            it a valid EUIN from their Assigned Number Block (ANB). 
+        </p>
+
+        <h1>Revisions</h1>
+
+        <p>
+            A new revision of an approved standard is put into the draft state and
+            requires the usual approval process taking place. The ESOSC is allowed to correct grammar,
+            orthographical or similar mistakes without requiring a new revision. A new revision
+            is created by creating a new document with the version number of the latest 
+            version incremented by one. The year and AN do not change. 
+        </p>
+
+        <h1>New members</h1>
+
+        <p>
+            For a non-member to become a member the candidate has to pass a vote. To pass the
+            vote 2/3 (rounded to the nearest integer rounding upwards at .5) of all existing 
+            members must vote to accept a candidate as a new member. A non-member must of
+            course agree to become a member. 
+        </p>
+
+        <h2>Half members</h2>
+
+        <p>
+            Half members can submit drafts and receive an Assigned Number Block, however,
+            half members can not vote and can not approve drafts.
+        </p>
+
+        <h2>Leaving</h2>
+
+        <p>
+            Members or half members may leave the ESOSC at any point. It is recommended
+            to pay each remaining member (or half member) a beverage when doing so but this
+            is not mandatory. However, since most members don't actually know each other 
+            this is very unlikely to happen. 
+        </p>
+
+        <p>
+            It's also recommended to nominate a replacement. 
+        </p>
+
+        <h1>Approval</h1>
+
+        <p>
+            Approval of a standard does not mean the ESOSC recommends using the standard or
+            endorses it. Approval merely serves as a form of 'Quality Control' to ensure
+            that the standard is detailed enough for others to implement. THE ESOSC DOES
+            NOT VERIFY ANYTHING BEYOND THAT. 
+        </p>
+
+        <h1>Settling disputes</h1>
+
+        <p>
+            Should there be disputes about ESOSC related matters that are not well-defined
+            within this document such disputes must be settled democratically (by voting) requiring
+            a 2/3 (rounded to the nearest integer rounding upwards at .5) majority.
+        </p>
+
+        <h1>This document</h1>
+
+        <p>
+            This document governs the rules of ESOSC and can not be overridden by another
+            document. Changes to this standard (new revisions) requires approval from
+            a 2/3 (rounded to the nearest integer rounding upwards at .5) majority of members.
+        </p>
+
+        <h1>Voting</h1>
+
+        <p>
+            If voting takes place all members must be notified. If a member can't be reached for 
+            more than three weeks the member is presumed to abstain from voting (and thus does
+            not count for the calculation of the amount of votes required to reach majority). 
+        </p>
+
+        <h1>Legal</h1>
+
+        <p>
+            Any standards approved by the ESOSC are free to use and must be free to use. 
+            If a contributor holds a patent to parts of a standard they contributed to they
+            grant everybody an unrevocable right to use the patent free of charge without
+            limitations. However, the ESOSC can not guarantee that standards or part of 
+            standards are not patented by third parties. 
+        </p>
+
+        <p>
+            STANDARDS ARE PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+            ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+            WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+            DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+            ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+            (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+            LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+            ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+            (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF A
+            STANDARD, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+        </p>
+    </main>
+    </body>
+</html>
